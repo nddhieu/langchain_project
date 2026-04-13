@@ -43,17 +43,13 @@ def main():
     print("\n=== Conversation (qwen2.5:14b) ===\n")
     for i, msg in enumerate(result["messages"]):
         role = getattr(msg, "type", None) or getattr(msg, "role", None) or type(msg).__name__
-        print(f"--- message {i} ({role}) ---")
         print(f"--- Message {i} ({role.upper()}) ---")
         if hasattr(msg, "content") and msg.content:
-            print("content repr:", repr(getattr(msg, "content")))
             print("Content:")
             print(getattr(msg, "content"))
         
         # Print the structured tool calls where AgentResponse lives!
         if hasattr(msg, "tool_calls") and msg.tool_calls:
-            print("tool_calls:", msg.tool_calls)
-        print()
             print("Tool Calls:")
             print(json.dumps(msg.tool_calls, indent=2))
         print("-" * 50 + "\n")
